@@ -31,39 +31,104 @@
 //   - Use kebab-case for all ids
 //   - You need at least 8 scenes total and at least 2 distinct endings
 // -------------------------------------------------------
-
 const storyNodes = {
   start: {
-  id: "gun-deck",
-  text: `Hello! It seems that you have been misplaced in time. Not sure how that happened. 
-  Anyway, welcome to Captain Bellamy's ship, <em>The Widow</em>. He's not aware you're here 
-  yet which is probably for the best. However, if you'd like to depart back to your boring 
-  time, you'll need to get ahold of his spyglass. Yes, his spyglass. For some reason, this 
-  will instantly transport you back. Don't ask me how. The writers haven't worked out that 
-  particular plothole yet. You're currently on the gun deck. See all the cannons? Yep, well... 
-  Good luck! Argh I guess.`,
-  choices: [
-    {text: "Crew's Quarters", nextId: "crews-quarters"},
-    {text: "The Hold", nextId: "hold"},
-  ],
-  isEnding: false
+    id: "start",
+    text: `Hello! It seems that you have been misplaced in time. Not sure how that happened. Anyway, welcome to Captain Bellamy's ship, The Widow. He's not aware you're here yet which is probably for the best. However, if you'd like to depart back to your boring time, you'll need to get ahold of his spyglass. Yes, his spyglass. For some reason, this will instantly transport you back. Don't ask me how. The writers haven't worked out that particular plothole yet. You're currently on the gun deck. See all the cannons? Yep, well... Good luck! Argh I guess.`,
+    choices: [
+      { text: "Crew's Quarters", nextId: "crews-quarters" },
+      { text: "The Hold", nextId: "hold" },
+    ],
+    isEnding: false,
   },
-  gunDeck: {
-  id: "gun-deck",
-  text: `Hello! It seems that you have been misplaced in time. Not sure how that happened. 
-  Anyway, welcome to Captain Bellamy's ship, <em>The Widow</em>. He's not aware you're here 
-  yet which is probably for the best. However, if you'd like to depart back to your boring 
-  time, you'll need to get ahold of his spyglass. Yes, his spyglass. For some reason, this 
-  will instantly transport you back. Don't ask me how. The writers haven't worked out that 
-  particular plothole yet. You're currently on the gun deck. See all the cannons? Yep, well... 
-  Good luck! Argh I guess.`,
-  choices: [
-    {text: "Crew's Quarters", nextId: "crews-quarters"},
-    {text: "The Hold", nextId: "hold"},
-  ],
-  isEnding: false
-  }
+  "gun-deck": {
+    id: "gun-deck",
+    text: `You have reached the gun deck again. This is where you started. Unless you find 
+    something new, this is almost pointless.`,
+    choices: [
+      { text: "Ascend to the crews' quarters", nextId: "crews-quarters" },
+      { text: "Descend to the Hold", nextId: "hold" },
+    ],
+    isEnding: false,
+  },
+  hold: {
+    id: "hold",
+    text: ``,
+    choices: [
+      { text: "Ascend to the gun deck", nextId: "gun-deck" },
+      { text: "Search the barrels", nextId: "search-barrels" },
+    ],
+    isEnding: false,
+  },
+  "captain-quarters": {
+    id: "captain-quarters",
+    text: ``,
+    choices: [
+      { text: "", nextId: "main-deck" },
+      { text: "", nextId: "" },
+    ],
+    isEnding: false,
+  },
+  "main-deck": {
+    id: "main-deck",
+    text: ``,
+    choices: [
+      { text: "", nextId: "ocean" },
+      { text: "", nextId: "crows-nest" },
+      { text: "", nextId: "captain-quarters" },
+      { text: "", nextId: "galley" },
+      { text: "", nextId: "helm" },
+      { text: "", nextId: "crews-quarters" },
+    ],
+    isEnding: false,
+  },
+  "crows-nest": {
+    id: "crows-nest",
+    text: `Woah, you're kind of high up. It's still kind of strange you haven't stumbled upon crew but we'll disregard that plothole for now. You see the captain talking with the helmsman at the helm. You might want to steer clear of there (ha. get it?).`,
+    choices: [{ text: "Climb ladder down to main deck", nextId: "main-deck" }],
+    isEnding: false,
+  },
+  "crews-quarters": {
+    id: "crews-quarters",
+    text: ``,
+    choices: [
+      { text: "", nextId: "main-deck" },
+      { text: "", nextId: "gun-deck" },
+    ],
+    isEnding: false,
+  },
+  galley: {
+    id: "galley",
+    text: ``,
+    choices: [
+      { text: "", nextId: "main-deck" },
+      { text: "", nextId: "" },
+    ],
+    isEnding: false,
+  },
+  "search-barrels": {
+    id: "search-barrels",
+    text: ``,
+    choices: [{ text: "Ascend to the gun deck", nextId: "gun-deck" }],
+    isEnding: false,
+  },
+  helm: {
+    id: "helm",
+    text: `Captain Bellamy was occupied in a conversation with the helmsman when you arrived. As an intruder and without question, he ended your life with his cutlass.`,
+    choices: [],
+    isEnding: true,
+  },
+  ocean: {
+    id: "ocean",
+    text: `I'm not sure if you expected to be saved here but that was kind of dumb. 
+    You drowned or got eaten by a shark. Who knows but it's kind of the ocean. You 
+    were always going to die with this choice.`,
+    choices: [],
+    isEnding: true,
+    endingTitle: "Died in 1724. Bummmer.",
+  },
 };
+
 
 // -------------------------------------------------------
 // GAME STATE
@@ -84,7 +149,7 @@ const visitedScenes = [];
 // getCurrentScene(sceneId)
 // Returns the scene object for the given id.
 function getCurrentScene(sceneId) {
-  // TODO: Return the scene from storyNodes using sceneId as the key
+  return storyNodes[sceneId];
 }
 
 // displayScene(sceneId)
@@ -92,34 +157,36 @@ function getCurrentScene(sceneId) {
 // For endings, logs the endingTitle instead of choices.
 // Do not call any input functions here - the game loop handles that.
 function displayScene(sceneId) {
-  // TODO: Get the scene using getCurrentScene(sceneId)
-  // TODO: Print a divider so turns are easy to read
-  // TODO: Print the scene text using console.log
-  // TODO: Check scene.isEnding
-  //   If true:  print "-- " + scene.endingTitle + " --"
-  //   If false: loop through scene.choices and print each one numbered from 1
-  //             Example output:
-  //               1. Enter the door
-  //               2. Walk away
+  const scene = getCurrentScene(sceneId);
+  console.log("___________");
+  console.log(scene.text);
+
+  if (scene.isEnding) {
+    console.log(`-- ${scene.endingTitle} --`);
+  } else {
+    for (let i=0; i < scene.choices.length; i++) {
+      console.log(`${i+1}. ${scene.choices[i].text}`);
+    }
+  }
 }
 
 // makeChoice(sceneId, choiceNumber)
 // Handles a player selecting one of the numbered choices.
 // Returns the nextId of the chosen scene.
 function makeChoice(sceneId, choiceNumber) {
-  // TODO: Get the scene using getCurrentScene(sceneId)
-  // TODO: Get the selected choice using scene.choices[choiceNumber - 1]
-  //   (choiceNumber is 1-based but arrays are 0-based)
-  // TODO: Push sceneId into visitedScenes to track where the player has been
-  // TODO: Return selectedChoice.nextId
+  const scene = getCurrentScene(sceneId);
+  const selectedChoice = scene.choices[choiceNumber - 1];
+  visitedScenes.push(sceneId);
+
+  return selectedChoice.nextId;
 }
 
 // restartGame()
 // Resets all state back to the beginning.
 // Do not call displayScene here - the game loop handles that after restart.
 function restartGame() {
-  // TODO: Set currentSceneId back to "start"
-  // TODO: Clear visitedScenes by setting visitedScenes.length = 0
+  currentSceneId = "start";
+  visitedScenes.length = 0;
 }
 
 // -------------------------------------------------------

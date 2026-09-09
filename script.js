@@ -34,7 +34,7 @@
 const storyNodes = {
   start: {
     id: "start",
-    text: `Hello! It seems that you have been misplaced in time. Not sure how that happened. Anyway, welcome to Captain Bellamy's ship, The Widow. He's not aware you're here yet which is probably for the best. However, if you'd like to depart back to your boring time, you'll need to get ahold of his spyglass. Yes, his spyglass. For some reason, this will instantly transport you back. Don't ask me how. The writers haven't worked out that particular plothole yet. You're currently on the gun deck. See all the cannons? Yep, well... Good luck! Argh I guess.`,
+    text: "Hello! It seems that you have been misplaced in time. Not sure how that happened. Anyway, welcome to Captain Bellamy's ship, The Widow. He's not aware you're here yet which is probably for the best. However, if you'd like to depart back to your boring time, you'll need to get ahold of his spyglass. Yes, his spyglass. For some reason, this will instantly transport you back. Don't ask me how. The writers haven't worked out that particular plothole yet. You're currently on the gun deck. See all the cannons? Yep, well... Good luck! Argh I guess.",
     choices: [
       { text: "Crew's Quarters", nextId: "crews-quarters" },
       { text: "The Hold", nextId: "hold" },
@@ -43,8 +43,7 @@ const storyNodes = {
   },
   "gun-deck": {
     id: "gun-deck",
-    text: `You have reached the gun deck again. This is where you started. Unless you find 
-    something new, this is almost pointless.`,
+    text: "You have reached the gun deck again. This is where you started. Unless you find something new, this is almost pointless.",
     choices: [
       { text: "Ascend to the crews' quarters", nextId: "crews-quarters" },
       { text: "Descend to the Hold", nextId: "hold" },
@@ -53,82 +52,94 @@ const storyNodes = {
   },
   hold: {
     id: "hold",
-    text: ``,
-    choices: [
-      { text: "Ascend to the gun deck", nextId: "gun-deck" },
-      { text: "Search the barrels", nextId: "search-barrels" },
-    ],
+    text: "You're in the hold surrounded by barrels and supplies. Boring. Go back up to the gun deck. What a waste of time...",
+    choices: [{ text: "Ascend to the gun deck", nextId: "gun-deck" }],
     isEnding: false,
   },
   "captain-quarters": {
     id: "captain-quarters",
-    text: ``,
+    text: "You have somehow entered the room of Captain Bellamy. He's not the cleanest man. Fabrics, presumably blankets and clothes, are strewn about the rum. There are jugs of rum and candlesticks. A map sits on a table near the wall and there is a porthole letting in some light.",
     choices: [
-      { text: "", nextId: "main-deck" },
-      { text: "", nextId: "" },
+      { text: "Return to the main deck", nextId: "main-deck" },
+      { text: "Search the blankets", nextId: "blanket-search" },
     ],
     isEnding: false,
   },
   "main-deck": {
     id: "main-deck",
-    text: ``,
+    text: "You're on the main deck, exposed to the elements. The wind rustles your hair and the smell of the sea wafts past your nose and most miraculously, you're still alone. Easiest game ever. Excuse the amateur programmer. You do have quite a few options from here. Don't mess up!",
     choices: [
-      { text: "", nextId: "ocean" },
-      { text: "", nextId: "crows-nest" },
-      { text: "", nextId: "captain-quarters" },
-      { text: "", nextId: "galley" },
-      { text: "", nextId: "helm" },
-      { text: "", nextId: "crews-quarters" },
+      { text: "Jump into the ocean", nextId: "ocean" },
+      { text: "Climb the crow's nest", nextId: "crows-nest" },
+      { text: "Enter the galley", nextId: "galley" },
+      { text: "Ascend to the helm", nextId: "helm" },
+      {
+        text: "Head back down to the crews' quarters",
+        nextId: "crews-quarters",
+      },
     ],
     isEnding: false,
   },
   "crows-nest": {
     id: "crows-nest",
-    text: `Woah, you're kind of high up. It's still kind of strange you haven't stumbled upon crew but we'll disregard that plothole for now. You see the captain talking with the helmsman at the helm. You might want to steer clear of there (ha. get it?).`,
+    text: "Woah, you're kind of high up. It's still kind of strange you haven't stumbled upon crew but we'll disregard that plothole for now. You see the captain talking with the helmsman at the helm. You might want to steer clear of there (ha. get it?).",
     choices: [{ text: "Climb ladder down to main deck", nextId: "main-deck" }],
     isEnding: false,
   },
   "crews-quarters": {
     id: "crews-quarters",
-    text: ``,
+    text: "Welcome to the crews' quarters. Just as you'd expect; there are hammocks hanging everywhere, some cots on the ground. There are some overturned boxes surrounding what looks like the middle of a card game.",
     choices: [
-      { text: "", nextId: "main-deck" },
-      { text: "", nextId: "gun-deck" },
+      { text: "Ascend to the main deck", nextId: "main-deck" },
+      { text: "Go down to the gun deck", nextId: "gun-deck" },
     ],
     isEnding: false,
   },
   galley: {
     id: "galley",
-    text: ``,
+    text: "You found the equivalent of a kitchen! Not much of a kitchen but it's something. Here you'll find dried and salted meats, stale bread, and absolutely nothing fresh. Not sure what you could want in here but do as you wish.",
     choices: [
-      { text: "", nextId: "main-deck" },
-      { text: "", nextId: "" },
+      { text: "Go back out to the main deck", nextId: "main-deck" },
+      { text: "Search the cupboards", nextId: "search-cupboards" },
     ],
     isEnding: false,
   },
   "search-barrels": {
     id: "search-barrels",
-    text: ``,
+    text: "Using the flat chisel and NOTHING BUT the flat chisel and no experience whatsoever, you remove the rings and head from a barrel and it opens to reveal a single key covered in some gunpowder dusting. Is this key important? Who knows? Well, I do. But you don't.",
     choices: [{ text: "Ascend to the gun deck", nextId: "gun-deck" }],
+    newItem: "key",
     isEnding: false,
+  },
+  "search-cupboards": {
+    id: "search-cupboards",
+    text: "You search the cupboards. Find some familiar spices but they look a little more coarse and without labels. There are some weird odors but most importantly you find a flat chisel. Huh. Wonder what this does?",
+    choices: [{ text: "Go back out to the main deck", nextId: "main-deck" }],
+    newItem: "flat chisel",
+    isEnding: false,
+  },
+  "blanket-search": {
+    id: "blanket-search",
+    text: "You found Captain Bellamy's spyglass! I honestly didn't think you capable but hold on tight. It's a little sickening traveling in time.",
+    choices: [],
+    isEnding: true,
+    endingTitle: "Traveled back to 2026.",
   },
   helm: {
     id: "helm",
-    text: `Captain Bellamy was occupied in a conversation with the helmsman when you arrived. As an intruder and without question, he ended your life with his cutlass.`,
+    text: "Captain Bellamy was occupied in a conversation with the helmsman when you arrived. As an intruder and without question, he ended your life with his cutlass.",
     choices: [],
     isEnding: true,
+    endingTitle: "Died in 1724 by stabbing. Bummmer.",
   },
   ocean: {
     id: "ocean",
-    text: `I'm not sure if you expected to be saved here but that was kind of dumb. 
-    You drowned or got eaten by a shark. Who knows but it's kind of the ocean. You 
-    were always going to die with this choice.`,
+    text: "I'm not sure if you expected to be saved here but that was kind of dumb. You drowned or got eaten by a shark. Who knows but it's kind of the ocean. You were always going to die with this choice.",
     choices: [],
     isEnding: true,
-    endingTitle: "Died in 1724. Bummmer.",
+    endingTitle: "Died in 1724 by ocean. Bummmer.",
   },
 };
-
 
 // -------------------------------------------------------
 // GAME STATE
@@ -138,6 +149,7 @@ const storyNodes = {
 
 let currentSceneId = "start";
 const visitedScenes = [];
+let inventory = [];
 
 // -------------------------------------------------------
 // YOUR FUNCTIONS
@@ -160,12 +172,30 @@ function displayScene(sceneId) {
   const scene = getCurrentScene(sceneId);
   console.log("___________");
   console.log(scene.text);
+  console.log(`Your inventory: ${inventory}`);
 
+  //inventory updates to script
+  if (inventory.includes("flat chisel") && sceneId === "hold") {
+    scene.choices.push({
+      text: "Search the barrels",
+      nextId: "search-barrels",
+    });
+    scene.text =
+      "You're in the hold surrounded by barrels and supplies. Boring. Go back up to the gun deck or I guess with this lousy flat chisel, you could investigate the barrels...";
+  }
+
+  if (inventory.includes("key") && sceneId === "main-deck") {
+    scene.choices.push({ text: "Enter the captain's quarters", nextId: "captain-quarters" });
+    scene.text =
+      "You're on the main deck, exposed to the elements. The wind rustles your hair and the smell of the sea wafts past your nose and most miraculously, you're still alone. Easiest game ever. Excuse the amateur programmer. Positive note is you could access the captain's quarters with that handy key you have...";
+  }
+
+  //print choices
   if (scene.isEnding) {
     console.log(`-- ${scene.endingTitle} --`);
   } else {
-    for (let i=0; i < scene.choices.length; i++) {
-      console.log(`${i+1}. ${scene.choices[i].text}`);
+    for (let i = 0; i < scene.choices.length; i++) {
+      console.log(`${i + 1}. ${scene.choices[i].text}`);
     }
   }
 }
@@ -178,6 +208,10 @@ function makeChoice(sceneId, choiceNumber) {
   const selectedChoice = scene.choices[choiceNumber - 1];
   visitedScenes.push(sceneId);
 
+  if (scene.newItem !== null) {
+    inventory.push(scene.newItem);
+  }
+
   return selectedChoice.nextId;
 }
 
@@ -187,6 +221,7 @@ function makeChoice(sceneId, choiceNumber) {
 function restartGame() {
   currentSceneId = "start";
   visitedScenes.length = 0;
+  inventory = [];
 }
 
 // -------------------------------------------------------
